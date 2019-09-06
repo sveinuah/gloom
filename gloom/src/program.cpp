@@ -2,7 +2,42 @@
 #include "program.hpp"
 #include "gloom/gloom.hpp"
 #include "gloom/shader.hpp"
-#include "Buffer.h"
+
+// Made a header file to hold the diferent buffers used in the assignment
+#include "TaskBuffers.h"
+
+uint32_t CreateTriangleVAO(std::vector<float>& vertices, std::vector<uint32_t>& indices)
+{
+	uint32_t va_id = 0;
+	glCreateVertexArrays(1, &va_id);
+	glBindVertexArray(va_id);
+
+	// Create Vertex Buffer and bind to VAO
+	uint32_t v_id = 0;
+	glCreateBuffers(1, &v_id);
+	glBindBuffer(GL_ARRAY_BUFFER, v_id);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(
+		0,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		3 * sizeof(float),
+		0
+	);
+
+	// Create Index Buffer and bind to VAO
+	uint32_t i_id = 0;
+	glCreateBuffers(1, &i_id);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, i_id);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
+
+	// unbind to avoid accidental binding of new buffers to this VAO.
+	glBindVertexArray(0);
+	return va_id;
+}
 
 
 void runProgram(GLFWwindow* window)
@@ -19,42 +54,7 @@ void runProgram(GLFWwindow* window)
 
     // Set up your scene here (create Vertex Array Objects, etc.)
 
-	uint32_t va_id = 0;
-	glCreateVertexArrays(1, &va_id);
-	glBindVertexArray(va_id);
-
-	float vertices[3 * 3]
-	{
-		-0.6,	-0.6,	0,
-		0.6,	-0.6,	0,
-		0,		0.6,	0
-	};
-
-	BufferLayout layout
-	{
-		{"position", DataType::Float3}
-	};
-	VertexBuffer vertexbuffer{ vertices, sizeof(vertices), layout };
-
-	vertexbuffer.Bind();
-	uint32_t index = 0;
-	for (const auto& element : layout)
-	{
-		glEnableVertexAttribArray(index);
-		glVertexAttribPointer(
-			index,
-			element.GetElementCount(),
-			ToGLType(element.type),
-			element.normalized ? GL_TRUE : GL_FALSE,
-			layout.GetStride(),
-			(const void*)element.offset
-		);
-		index++;
-	}
-
-	uint32_t indicies[3]{ 0, 1, 2 };
-	IndexBuffer indexbuffer{ indicies, sizeof(indicies) / sizeof(uint32_t) };
-	indexbuffer.Bind();
+	uint32_t va_id = CreateTriangleVAO(TaskTwo::vertices, TaskTwo::indices);
 
 	Gloom::Shader shader;
 	shader.makeBasicShader(
@@ -70,9 +70,8 @@ void runProgram(GLFWwindow* window)
 
         // Draw your scene here
 		shader.activate();
+		
 		glBindVertexArray(va_id);
-		vertexbuffer.Bind();
-		indexbuffer.Bind();
 		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 		shader.deactivate();
 
