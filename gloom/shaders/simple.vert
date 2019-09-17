@@ -1,9 +1,12 @@
 #version 430 core
 
-in vec3 position;
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec4 color;
+
+out vec4 v_Color;
 
 void main()
 {
-	vec3 newpos = position * vec3(-1, -1, 1);
-    gl_Position = vec4(newpos, 1.0f);
+	v_Color = color;
+    gl_Position = vec4(position, 1.0f);
 }
