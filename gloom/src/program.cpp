@@ -99,7 +99,7 @@ void runProgram(GLFWwindow* window)
 		shader.activate();
 		
 		glBindVertexArray(va_id);
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 3 * 6, GL_UNSIGNED_INT, 0);
 
 		shader.deactivate();
 
