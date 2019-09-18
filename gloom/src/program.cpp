@@ -81,7 +81,7 @@ void runProgram(GLFWwindow* window)
 
     // Set up your scene here (create Vertex Array Objects, etc.)
 
-	uint32_t va_id = CreateTriangleVAO(TaskOne::positions, TaskOne::colors, TaskOne::indices);
+	uint32_t va_id = CreateTriangleVAO(TaskTwo::positions, TaskTwo::colors, TaskTwo::indices);
 
 	Gloom::Shader shader;
 	shader.makeBasicShader(
@@ -99,7 +99,7 @@ void runProgram(GLFWwindow* window)
 		shader.activate();
 		
 		glBindVertexArray(va_id);
-		glDrawElements(GL_TRIANGLES, 3 * 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 3 * 3, GL_UNSIGNED_INT, 0);
 
 		shader.deactivate();
 

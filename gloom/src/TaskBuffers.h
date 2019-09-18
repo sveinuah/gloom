@@ -69,15 +69,40 @@ namespace TaskOne {
 }
 
 namespace TaskTwo {
-	std::vector<float> vertices
+	std::vector<float> positions
 	{
-		0.6f,	-0.8f,	-1.2f,
-		0.f,	0.4f,	0.f,
-		-0.8f,	-0.2f,	1.2f
+		-0.5f,	0.0f,	0.8f,
+		-0.1f,	-0.5f,	0.8f,
+		0.1f,	0.1f,	0.8f,
+
+		0.1f,	-0.5f,	0.0f,
+		0.5f,	0.0f,	0.0f,
+		-0.1f,	0.1f,	0.0f,
+
+		0.3f,	0.5f,	-0.8f,
+		-0.3f,	0.5f,	-0.8f,
+		0.0f,	-0.1f,	-0.8f
+	};
+
+	std::vector<float> colors
+	{
+		0.8f,	0.0f,	0.0f,	0.6f,
+		0.8f,	0.0f,	0.0f,	0.6f,
+		0.8f,	0.0f,	0.0f,	0.6f,
+
+		0.0f,	0.8f,	0.0f,	0.6f,
+		0.0f,	0.8f,	0.0f,	0.6f,
+		0.0f,	0.8f,	0.0f,	0.6f,
+
+		0.0f,	0.0f,	0.8f,	0.6f,
+		0.0f,	0.0f,	0.8f,	0.6f,
+		0.0f,	0.0f,	0.8f,	0.6f
 	};
 
 	std::vector<uint32_t> indices
 	{
-		0, 1, 2
+		0, 1, 2,
+		3, 4, 5,
+		6, 7, 8
 	};
 }
